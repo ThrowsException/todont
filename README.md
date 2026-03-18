@@ -15,6 +15,7 @@ This is the worlds most complicated to do app built entirely by agents
 - Gamification
 - Exports/Backups
 - Completely Opensource and self hosted
+- API with llm.txts, MCP, and OpenAPI Swagger
 
 ## Goals
 Given a relatively easy "hello world" program that most developers would build in a few hours to learn some new technology, how bizarrely complicated can we make it given that the human brain is no longer the thing that is being used and just burn tokens to build wild s***. 
@@ -32,6 +33,24 @@ Whatever the AI's deem necessary
 https://www.canirun.ai/
 
 ## Running
+
+### Backend
+```bash
+uv run uvicorn backend.app.main:app --reload
+```
+
+### Linting
+```bash
+uv run ruff check backend/ tests/
+uv run ruff check --fix backend/ tests/
+```
+
+### Testing
+```bash
+uv run pytest -v
+```
+
+### Docker
 Should be possible with any model but locally im using this currently
 
 `docker model run ai/llama3.1`

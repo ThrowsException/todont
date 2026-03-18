@@ -13,10 +13,12 @@ frontend/        # Future frontend (placeholder)
 ```
 
 ## Dev environment tips
-- `uv venv` to start virtualenvironments
-- `source ./.venv/bin/activate` to activate environment
 - to add packages `uv add <package>`
-- Run backend: `uvicorn backend.app.main:app --reload`
+- Run backend: `uv run uvicorn backend.app.main:app --reload`
+- Lint: `uv run ruff check backend/ tests/`
+- Lint fix: `uv run ruff check --fix backend/ tests/`
+- Test: `uv run pytest -v`
+- Test single: `uv run pytest tests/test_todos.py::test_name -v`
 
 ## Technology
 
@@ -28,6 +30,8 @@ Technology used for the project
 ### Libraries
 - FastAPI
 - Uvicorn
+- Ruff (linting)
+- Pytest + httpx (testing)
 
 ### Containers
 - Docker
