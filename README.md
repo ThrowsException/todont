@@ -28,3 +28,14 @@ Whatever the AI's deem necessary
 * Cost must be as close to 0 as possible
 
 
+## Resources
+https://www.canirun.ai/
+
+## Running
+Should be possible with any model but locally im using this currently
+
+`docker model run ai/llama3.1`
+`docker sandbox run opencode ~/projects/complicated_todo`
+
+## Useful commands
+`opencode session list | grep 'ses' | awk '{ print $1 }' | xargs -I {} opencode session delete {}`
