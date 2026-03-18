@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from backend.app.models.todo import Todo, TodoCreate, TodoUpdate
+from app.models.todo import Todo, TodoCreate, TodoUpdate
 
 router = APIRouter(prefix="/todos", tags=["todos"])
 

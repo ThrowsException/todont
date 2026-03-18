@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from uvicorn import run
 from fastapi_mcp import FastApiMCP
 
-from backend.app.routers import todos
+from app.routers import todos
 
 app = FastAPI(title="TODONT API")
 
