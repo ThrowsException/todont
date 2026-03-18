@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.app.main import app
-from backend.app.routers import todos as todos_module
+from app.main import app
+from app.routers import todos as todos_module
 
 
 @pytest.fixture

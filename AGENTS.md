@@ -8,20 +8,19 @@ This project is a todo application. The main goal is to learn agentic coding and
   
 ## Project Structure
 ```
-backend/         # FastAPI backend
-  app/
-    main.py      # App entry point
-    routers/     # API route modules
-    models/      # Data models
+app/           # FastAPI backend
+  main.py      # App entry point
+  routers/     # API route modules
+  models/      # Data models
 frontend/        # Future frontend (placeholder)
 ```
 
 ## Dev environment tips
 - activate virtualenvironemtn with `source ./.venv/bin/activate` 
 - to add packages `uv add <package>`
-- Run backend: `uv run uvicorn backend.app.main:app --reload`
-- Lint: `uv run ruff check backend/ tests/`
-- Lint fix: `uv run ruff check --fix backend/ tests/`
+- Run backend: `fastapi dev app.main.py`
+- Lint: `uv run ruff check app/ tests/`
+- Lint fix: `uv run ruff check --fix app/ tests/`
 - Test: `uv run pytest -v`
 - Test single: `uv run pytest tests/test_todos.py::test_name -v`
 

@@ -36,13 +36,13 @@ https://www.canirun.ai/
 
 ### Backend
 ```bash
-uv run uvicorn backend.app.main:app --reload
+fastapi dev app/main.py
 ```
 
 ### Linting
 ```bash
-uv run ruff check backend/ tests/
-uv run ruff check --fix backend/ tests/
+uv run ruff check app/ tests/
+uv run ruff check --fix app/ tests/
 ```
 
 ### Testing
