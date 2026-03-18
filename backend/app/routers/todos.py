@@ -1,6 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
-from backend.app.models.todo import Todo, TodoCreate
+from backend.app.models.todo import Todo, TodoCreate, TodoUpdate
 
 router = APIRouter(prefix="/todos", tags=["todos"])
 
@@ -20,3 +20,12 @@ def create_todo(todo: TodoCreate) -> Todo:
     _next_id += 1
     todos.append(new_todo)
     return new_todo
+
+
+@router.patch("/{todo_id}")
+def update_todo(todo_id: int, update: TodoUpdate) -> Todo:
+    for todo in todos:
+        if todo.id == todo_id:
+            todo.done = update.done
+            return todo
+    raise HTTPException(status_code=404, detail="Todo not found")

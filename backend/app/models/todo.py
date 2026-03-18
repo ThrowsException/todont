@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class TodoCreate(BaseModel):
@@ -7,4 +7,10 @@ class TodoCreate(BaseModel):
 
 
 class Todo(TodoCreate):
+    model_config = ConfigDict(frozen=False)
+
     id: int
+
+
+class TodoUpdate(BaseModel):
+    done: bool

@@ -2,6 +2,10 @@
 
 This project is a todo application. The main goal is to learn agentic coding and interacting with code agents.
 
+## Instructions
+
+- Aftering implementing a plan append the summary to docs/plan.md or make a bespoke plan file
+  
 ## Project Structure
 ```
 backend/         # FastAPI backend
