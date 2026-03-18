@@ -1,16 +1,16 @@
-# Backend AGENTS.md
+# App AGENTS.md
 
 Python FastAPI app for the API.
 
 ## Running
 ```bash
-uv run uvicorn backend.app.main:app --reload
+fastapi dev app/main.py
 ```
 
 ## Linting
 ```bash
-uv run ruff check backend/ tests/
-uv run ruff check --fix backend/ tests/   # auto-fix
+uv run ruff check app/ tests/
+uv run ruff check --fix app/ tests/   # auto-fix
 ```
 
 ## Testing
