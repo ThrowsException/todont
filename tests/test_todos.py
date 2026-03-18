@@ -7,8 +7,11 @@ def test_read_all_todos_empty(client):
 def test_create_todo(client):
     todo = {"title": "Test todo", "done": False}
     response = client.post("/todos", json=todo)
-    assert response.status_code == 200
-    assert response.json() == todo
+    assert response.status_code == 201
+    data = response.json()
+    assert data["title"] == "Test todo"
+    assert data["done"] is False
+    assert data["id"] == 1
 
 
 def test_create_and_list_todo(client):

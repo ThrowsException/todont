@@ -1,0 +1,28 @@
+# TODONT API
+
+A simple todo management REST API built with FastAPI.
+
+## Endpoints
+
+### GET /todos
+Returns all todos.
+
+Response: array of Todo objects.
+
+### POST /todos
+Creates a new todo.
+
+Request body: `{ "title": string, "done": boolean (default: false) }`
+Response: the created Todo object with its assigned id.
+Status: 201
+
+## Models
+
+### Todo
+- `id` (integer) — unique identifier, auto-assigned
+- `title` (string) — the todo description
+- `done` (boolean) — completion status, defaults to false
+
+## Docs
+
+Interactive API docs are available at `/docs` (Swagger UI) and `/redoc` (ReDoc).
