@@ -13,6 +13,7 @@ frontend/        # Future frontend (placeholder)
 ```
 
 ## Dev environment tips
+- activate virtualenvironemtn with `source ./.venv/bin/activate` 
 - to add packages `uv add <package>`
 - Run backend: `uv run uvicorn backend.app.main:app --reload`
 - Lint: `uv run ruff check backend/ tests/`
