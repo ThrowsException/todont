@@ -3,7 +3,7 @@ name: github-commit
 description: Generates a well structured github commit message when user asks
 ---
 
-Create a short github commit message outlining the changes. 
+Create a short github commit message outlining the changes and commit them.
 
 Use the format
 ```
