@@ -34,3 +34,11 @@ def client():
     app.dependency_overrides.clear()
     db_module.engine = original_engine
     db_module.async_session_factory = original_factory
+
+
+@pytest.fixture(autouse=True)
+def clear_event_bus():
+    yield
+    from app.events import event_bus
+
+    event_bus._handlers.clear()
