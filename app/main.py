@@ -1,18 +1,22 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
-from uvicorn import run
 from fastapi_mcp import FastApiMCP
 
+from app.database import create_db_and_tables
 from app.routers import todos
 
-app = FastAPI(title="TODONT API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_db_and_tables()
+    yield
+
+
+app = FastAPI(title="TODONT API", lifespan=lifespan)
 
 mcp = FastApiMCP(app)
-
-# Mount the MCP server directly to your FastAPI app
 mcp.mount_http()
 
 app.include_router(todos.router)
 
-
-if __name__ == "__main__":
-    run(app, host="0.0.0.0", port=8000)

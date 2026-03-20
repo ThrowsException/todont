@@ -1,31 +1,37 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlmodel import select
+from sqlmodel.ext.asyncio.session import AsyncSession
 
+from app.database import get_session
 from app.models.todo import Todo, TodoCreate, TodoUpdate
 
 router = APIRouter(prefix="/todos", tags=["todos"])
 
-todos: list[Todo] = []
-_next_id: int = 1
+
+@router.get("", response_model=list[Todo])
+async def read_all_todos(session: AsyncSession = Depends(get_session)):
+    result = await session.exec(select(Todo))
+    return result.all()
 
 
-@router.get("")
-def read_all_todos() -> list[Todo]:
-    return todos
+@router.post("", response_model=Todo, status_code=201)
+async def create_todo(todo: TodoCreate, session: AsyncSession = Depends(get_session)):
+    db_todo = Todo.model_validate(todo)
+    session.add(db_todo)
+    await session.commit()
+    await session.refresh(db_todo)
+    return db_todo
 
 
-@router.post("", status_code=201)
-def create_todo(todo: TodoCreate) -> Todo:
-    global _next_id
-    new_todo = Todo(id=_next_id, **todo.model_dump())
-    _next_id += 1
-    todos.append(new_todo)
-    return new_todo
-
-
-@router.patch("/{todo_id}")
-def update_todo(todo_id: int, update: TodoUpdate) -> Todo:
-    for todo in todos:
-        if todo.id == todo_id:
-            todo.done = update.done
-            return todo
-    raise HTTPException(status_code=404, detail="Todo not found")
+@router.patch("/{todo_id}", response_model=Todo)
+async def update_todo(
+    todo_id: int, update: TodoUpdate, session: AsyncSession = Depends(get_session)
+):
+    db_todo = await session.get(Todo, todo_id)
+    if not db_todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    db_todo.done = update.done
+    session.add(db_todo)
+    await session.commit()
+    await session.refresh(db_todo)
+    return db_todo

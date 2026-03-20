@@ -1,16 +1,19 @@
-from pydantic import BaseModel, ConfigDict
+
+from sqlmodel import Field, SQLModel
 
 
-class TodoCreate(BaseModel):
+class TodoBase(SQLModel):
     title: str
     done: bool = False
 
 
-class Todo(TodoCreate):
-    model_config = ConfigDict(frozen=False)
-
-    id: int
+class Todo(TodoBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
 
 
-class TodoUpdate(BaseModel):
+class TodoCreate(TodoBase):
+    pass
+
+
+class TodoUpdate(SQLModel):
     done: bool
