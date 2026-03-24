@@ -36,7 +36,7 @@ https://www.canirun.ai/
 
 ### Backend
 ```bash
-fastapi dev app/main.py
+uv run fastapi dev app/main.py
 ```
 
 ### Linting

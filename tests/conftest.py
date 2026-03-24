@@ -1,12 +1,15 @@
 from collections.abc import AsyncGenerator
 
+import boto3
 import pytest
 from fastapi.testclient import TestClient
+from moto import mock_aws
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 import app.database as db_module
 from app.database import get_session
+from app.dynamo import TABLE_NAME, get_table
 from app.main import app
 
 
@@ -28,8 +31,18 @@ def client():
 
     app.dependency_overrides[get_session] = override_get_session
 
-    with TestClient(app) as c:
-        yield c
+    with mock_aws():
+        dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
+        table = dynamodb.create_table(
+            TableName=TABLE_NAME,
+            KeySchema=[{"AttributeName": "id", "KeyType": "HASH"}],
+            AttributeDefinitions=[{"AttributeName": "id", "AttributeType": "S"}],
+            BillingMode="PAY_PER_REQUEST",
+        )
+        app.dependency_overrides[get_table] = lambda: table
+
+        with TestClient(app) as c:
+            yield c
 
     app.dependency_overrides.clear()
     db_module.engine = original_engine

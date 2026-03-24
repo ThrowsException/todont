@@ -5,7 +5,7 @@ from app.events.models import EventType, TodoEvent
 
 
 async def append_event(
-    session: AsyncSession, todo_id: int, event_type: EventType, payload: dict
+    session: AsyncSession, todo_id: str, event_type: EventType, payload: dict
 ) -> TodoEvent:
     """Does NOT commit — caller owns the transaction boundary."""
     event = TodoEvent(todo_id=todo_id, event_type=event_type, payload=payload)
@@ -14,7 +14,7 @@ async def append_event(
     return event
 
 
-async def get_events_for_todo(session: AsyncSession, todo_id: int) -> list[TodoEvent]:
+async def get_events_for_todo(session: AsyncSession, todo_id: str) -> list[TodoEvent]:
     result = await session.exec(
         select(TodoEvent).where(TodoEvent.todo_id == todo_id).order_by(TodoEvent.id)
     )

@@ -16,7 +16,7 @@ class EventType(enum.StrEnum):
 class TodoEvent(SQLModel, table=True):
     __tablename__ = "todo_events"
     id: int | None = Field(default=None, primary_key=True)
-    todo_id: int = Field(index=True, nullable=False)
+    todo_id: str = Field(index=True, nullable=False)
     event_type: EventType = Field(nullable=False)
     payload: dict[str, Any] = Field(sa_column=Column(JSON), default_factory=dict)
     occurred_at: datetime = Field(

@@ -11,7 +11,7 @@ def test_create_todo(client):
     data = response.json()
     assert data["title"] == "Test todo"
     assert data["done"] is False
-    assert data["id"] == 1
+    assert "id" in data
 
 
 def test_create_and_list_todo(client):
