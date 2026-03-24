@@ -13,6 +13,10 @@ from app.dynamo import TABLE_NAME, get_table
 from app.main import app
 
 
+async def _stub_verify_token():
+    return {"sub": "test-user"}
+
+
 @pytest.fixture
 def client():
     test_engine = create_async_engine("sqlite+aiosqlite:///:memory:")
@@ -30,6 +34,10 @@ def client():
             yield session
 
     app.dependency_overrides[get_session] = override_get_session
+
+    from app.auth import verify_token
+
+    app.dependency_overrides[verify_token] = _stub_verify_token
 
     with mock_aws():
         dynamodb = boto3.resource("dynamodb", region_name="us-east-1")

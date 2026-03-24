@@ -34,9 +34,25 @@ https://www.canirun.ai/
 
 ## Running
 
+### Local setup
+```bash
+bin/bootstrap        # starts DynamoDB Local + Keycloak, creates table + realm/client
+source bin/test_env  # sets AWS_ENDPOINT_URL_DYNAMODB, KEYCLOAK_* env vars
+```
+
 ### Backend
 ```bash
 uv run fastapi dev app/main.py
+```
+
+### Getting a token
+```bash
+TOKEN=$(curl -s -X POST "$KEYCLOAK_URL/realms/$KEYCLOAK_REALM/protocol/openid-connect/token" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials&client_id=$KEYCLOAK_CLIENT_ID&client_secret=$KEYCLOAK_CLIENT_SECRET" \
+  | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+
+curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/todos
 ```
 
 ### Linting

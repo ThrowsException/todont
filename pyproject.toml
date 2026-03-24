@@ -10,6 +10,7 @@ dependencies = [
     "sqlmodel>=0.0.37",
     "aiosqlite>=0.22.1",
     "boto3>=1.42.74",
+    "pyjwt>=2.12.1",
 ]
 
 [dependency-groups]
