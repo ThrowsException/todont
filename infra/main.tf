@@ -18,4 +18,15 @@ resource "aws_dynamodb_table" "todos" {
     name = "id"
     type = "S"
   }
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "user_id-index"
+    hash_key        = "user_id"
+    projection_type = "ALL"
+  }
 }
